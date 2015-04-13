@@ -1,0 +1,204 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns='http://www.w3.org/1999/xhtml' xml:lang='en' lang='en'>
+<!--
+  Documentation for Jaypha Inet.
+  Copyright 2015 Jaypha.
+  Distributed under the Boost Licence.
+  Written by Jason den Dulk.
+-->
+<head>
+<style type='text/css'>
+ *
+ {
+  padding: 0;
+  margin: 0;
+ }
+
+  body
+  {
+   font-size: 12px;
+   font-family:arial,sans-serif;
+  }
+ p, table, dd
+ {
+   margin-bottom: 0.7em;
+ }
+ h1,h2,h3 { margin-bottom: 0.7em; }
+ h1 { font-size: 22px; color: red; }
+ h2 { font-size: 18px; color: red; }
+ h3 { font-size: 15px; color: red; }
+ 
+ table
+ {
+  border-collapse: collapse;
+ }
+ td, th
+ {
+  padding: 3px;
+  border: 1px solid black;
+ }
+ .d_decl { background-color: #E4E9EF;
+    border-bottom: 2px solid #336600;
+
+    padding: 2px 0 2px 2px;
+    text-align: left;
+    margin-bottom: 0.7em;
+    font-family: monospace;
+  }
+  .funcName { font-weight: bold; }
+
+  .code { font-family: monospace; }
+
+</style>
+<title>Jaypha Inet Email/Mime Utilities Documentation</title>
+</head>
+<body style=''>
+<div style='width:1000px; margin:auto'>
+
+<h1>Jaypha Inet Email/Mime Utilities Documentation</h1>
+
+<h2>Introduction</h2>
+
+<p>This project contains structures and classes for reading and writing IMF/MIME documents.
+Also included is a structure for constructing and sending emails.</p>
+
+<p>IMF (Internet Message Format) is the original format for sending emails on the Internet.
+MIME (Multimedia Internet Mail Extensions) is an extention to IMF for allowing mulitple
+media forms to be send via emsil. MIME is also used in other Internet protocols such as HTTP.
+</p>
+
+<h2>Requirements</h2>
+
+<p>This project requires the Jaypha-Base package, available through Dub and GitHub.</p>
+<p>Also required is the Curl library installed on your system.</p>
+
+<h2>Module Index</h2>
+<p>The modules are</p>
+<table>
+ <tr><td>jaypha.inet.email</td><td>Structure for building emails.</td></tr>
+ <tr><td>jaypha.inet.imf.writing</td><td>Code for writing IMF documents</td></tr>
+ <tr><td>jaypha.inet.mime.content_disposition</td><td>Content-Disposition MIME header</td></tr>
+ <tr><td>jaypha.inet.mime.content_type</td><td>Content-Type MIME header</td></tr>
+ <tr><td>jaypha.inet.mime.header</td><td>MIME headers</td></tr>
+ <tr><td>jaypha.inet.mime.reading</td><td>Code to read MIME documents</td></tr>
+ <tr><td>jaypha.inet.mime.writing</td><td>Code to write MIME documents</td></tr>
+</table>
+
+<h2>Structure Index</h2>
+<p>The structures are</p>
+<table>
+ <thead>
+  <tr><th>Name</th><th>Module</th><th>Descritpion</th></tr>
+ </thead>
+ <tbody>
+  <tr><td>struct Email</td><td>jaypha.inet.email</td><td>Use to construct and send emails</td></tr>
+  <tr><td>struct Email.Attachment</td><td>jaypha.inet.email</td><td>Attachments for emails</td></tr>
+  <tr><td>struct Mailbox</td><td>jaypha.inet.imf.writing</td><td>Email address used in IMF headers</td></tr>
+  <tr><td>struct MimeContentDisposition</td><td>jaypha.inet.mime.content_disposition</td><td>Content-Disposition header</td></tr>
+  <tr><td>struct MimeContentType</td><td>jaypha.inet.mime.content_type</td><td>Content-Type header</td></tr>
+  <tr><td>struct MimeHeader</td><td>jaypha.inet.mime.header</td><td>Generic MIME header</td></tr>
+  <tr><td>struct MimeEntityReader</td><td>jaypha.inet.mime.reading</td><td>Reads MIME entitys</td></tr>
+  <tr><td>struct MimeEntity</td><td>jaypha.inet.mime.reading</td><td>Represents a MIME entity. Used for writing</td></tr>
+ </tbody>
+</table>
+
+<h2>Function Index</h2>
+
+
+<h2>Reference</h2>
+
+<dl>
+<h3>jaypha.inet.email</h3>
+
+<dt class="d_decl">struct <a name="Email"></a><span class="funcName">Email</span></dt>
+<dd><p> A structure for constructing and sending emails.</p>
+<p>To use Email, supply the properties with the appropriate values. Then call <i>sendmail</i> (Linux only)
+to send the email using the system sendmail program, or <i>send</i> to use Curl. You can 
+obtain a formatted copy using <i>copy</i>.</p>
+<p>If <i>text</i> or <i>html</i> is set, but not both, then that will become the plain
+content of the email. If both are set then a multipart/alternate entity will be created
+with <i>html</i> as the preferred alternative. This is consistant with convention. If <i>html</i>
+alone is set, the structure will <b>not</b> create a non-HTML version of the content.</p>
+
+<p><b>Example:</b></p>
+<p>
+<pre>
+  Email email;
+
+  email.text = "Main body part";
+  email.html = "&lt;p>Main body part&lt;/p>";
+
+  email.subject = "Subject";
+  email.from = Mailbox("jason@jaypha.com.au", "Jason den Dulk");
+  email.to = [ Mailbox("anyone@anything.net") ];
+
+  email.attachments ~= Email.Attachment(
+    "Clown",
+    "image/jpeg",
+    getImageContentsFromSomewhere(),
+    "clown.jpg"
+  );
+
+  email.send();
+</pre></p>
+<p><b>Properties:</b></p>
+<table class='parms'>
+<tr><td class='code'>string <i>subject</i></td><td>Email subject</td></tr>
+<tr><td class='code'>Mailbox <i>from</i></td><td>Sender email address</td></tr>
+<tr><td class='code'>Mailbox[] <i>to</i></td><td>Standard recipients</td></tr>
+<tr><td class='code'>Mailbox[] <i>cc</i></td><td>Carbon copy (cc) recipients</td></tr>
+<tr><td class='code'>Mailbox[] <i>bcc</i></td><td>Blind carbon copy (bcc) recipients</td></tr>
+<tr><td class='code'>string <i>text</i></td><td>Unformatted text contents</td></tr>
+<tr><td class='code'>string <i>html</i></td><td>HTML formatted contents</td></tr>
+<tr><td class='code'>Email.Attachment[] <i>attachments</i></td><td>Attachments</td></tr>
+</table>
+<b>Mehtods:</b>
+<table class='parms'>
+<tr><td class='code'>addHeader</td><td>Adds a generic header.</td></tr>
+<tr><td class='code'>copy</td><td>Send a formatted copy to an output range.</td></tr>
+<tr><td class='code'>sendmail</td><td>Send via sendmail program (Linux only).</td></tr>
+<tr><td class='code'>send</td><td>Send via Curl (requires curl library).</td></tr>
+</table>
+
+</dd>
+
+<dt class="d_decl">struct <a name="Email-Attachment"></a><span class="funcName">Email.Attachment</span></dt>
+<dd><p> A structure for email attachments.</p>
+<p><b>Properties:</b></p>
+<table class='parms'>
+<tr><td class='code'>string <i>name</i></td><td>Title</td></tr>
+<tr><td class='code'>string <i>mimeType</i></td><td>MIME type</td></tr>
+<tr><td class='code'>immutable(ubyte)[] <i>content</i></td><td>Attachment contents</td></tr>
+<tr><td class='code'>string <i>fileName</i></td><td>File name</td></tr>
+</table>
+
+</dl>
+
+<h2>Appendix: Relevant RFCs</h2>
+<p>IMF is covered by</p>
+
+<table>
+ <tr><td>RFC5322</td><td>IMF specification (defines header syntax)</td></tr>
+ <tr><td>RFC6854</td><td>Update to allow multiple senders.</td></tr>
+ <tr><td>RFC6152</td><td>8-bit extension.</td></tr>
+ <tr><td>RFC2387</td><td>multipart/related</td></tr>
+</table>
+
+<p>MIME is covered by</p>
+
+<table>
+ <tr><td>RFC2045</td><td>Original MIME Specs</td></tr>
+ <tr><td>RFC2046</td><td>MIME Types</td></tr>
+ <tr><td>RFC2047</td><td>Non ASCII in IMF headers.</td></tr>
+ <tr><td>RFC2049</td><td>MIME Conformance</td></tr>
+ <tr><td>RFC2183, 2184, 2231</td><td>Content Disposition Header</td></tr>
+</table>
+
+<p>Other related RFCs</p>
+
+<table>
+ <tr><td>RFC4289</td><td>Registration Procedures for MIME</td></tr>
+ <tr><td>RFC6838</td><td>Media Type Specifications and Registration Procedures</td></tr>
+ <tr><td>RFC4021</td><td>Registration of Mail and MIME Header Fields</td></tr>
+ <tr><td>RFC5321</td><td>Simple Mail Transfer Protocol</td></tr>
+</table>
