@@ -98,7 +98,7 @@ media forms to be send via emsil. MIME is also used in other Internet protocols 
   <tr><td>struct MimeContentType</td><td>jaypha.inet.mime.content_type</td><td>Content-Type header</td></tr>
   <tr><td>struct MimeHeader</td><td>jaypha.inet.mime.header</td><td>Generic MIME header</td></tr>
   <tr><td>struct MimeEntityReader</td><td>jaypha.inet.mime.reading</td><td>Reads MIME entitys</td></tr>
-  <tr><td>struct MimeEntity</td><td>jaypha.inet.mime.reading</td><td>Represents a MIME entity. Used for writing</td></tr>
+  <tr><td>struct MimeEntity</td><td>jaypha.inet.mime.writing</td><td>Represents a MIME entity. Used for writing</td></tr>
  </tbody>
 </table>
 
@@ -130,7 +130,7 @@ alone is set, the structure will <b>not</b> create a non-HTML version of the con
 
   email.subject = "Subject";
   email.from = Mailbox("jason@jaypha.com.au", "Jason den Dulk");
-  email.to = [ Mailbox("anyone@anything.net") ];
+  email.to = "anyone@anything.net";
 
   email.attachments ~= Email.Attachment(
     "Clown",
@@ -144,10 +144,20 @@ alone is set, the structure will <b>not</b> create a non-HTML version of the con
 <p><b>Properties:</b></p>
 <table class='parms'>
 <tr><td class='code'>string <i>subject</i></td><td>Email subject</td></tr>
-<tr><td class='code'>Mailbox <i>from</i></td><td>Sender email address</td></tr>
-<tr><td class='code'>Mailbox[] <i>to</i></td><td>Standard recipients</td></tr>
-<tr><td class='code'>Mailbox[] <i>cc</i></td><td>Carbon copy (cc) recipients</td></tr>
-<tr><td class='code'>Mailbox[] <i>bcc</i></td><td>Blind carbon copy (bcc) recipients</td></tr>
+<tr><td class='code'>Mailbox <i>from</i><br/>&nbsp;&nbsp;&nbsp;from(Mailbox v)<br/>&nbsp;&nbsp;&nbsp;from(string v)</td><td>Sender email address</td></tr>
+<tr><td class='code'>Mailbox[] <i>to</i><br/>&nbsp;&nbsp;&nbsp;to(Mailbox v)
+                        <br/>&nbsp;&nbsp;&nbsp;to(Mailbox[] v)
+                        <br/>&nbsp;&nbsp;&nbsp;to(string v)
+                        <br/>&nbsp;&nbsp;&nbsp;to(string[] v)
+                        </td><td>Standard recipients</td></tr>
+<tr><td class='code'>Mailbox[] <i>cc</i><br/>&nbsp;&nbsp;&nbsp;cc(Mailbox v)
+                        <br/>&nbsp;&nbsp;&nbsp;cc(Mailbox[] v)
+                        <br/>&nbsp;&nbsp;&nbsp;cc(string v)
+                        <br/>&nbsp;&nbsp;&nbsp;cc(string[] v)</td><td>Carbon copy (cc) recipients</td></tr>
+<tr><td class='code'>Mailbox[] <i>bcc</i><br/>&nbsp;&nbsp;&nbsp;bcc(Mailbox v)
+                        <br/>&nbsp;&nbsp;&nbsp;bcc(Mailbox[] v)
+                        <br/>&nbsp;&nbsp;&nbsp;bcc(string v)
+                        <br/>&nbsp;&nbsp;&nbsp;bcc(string[] v)</td><td>Blind carbon copy (bcc) recipients</td></tr>
 <tr><td class='code'>string <i>text</i></td><td>Unformatted text contents</td></tr>
 <tr><td class='code'>string <i>html</i></td><td>HTML formatted contents</td></tr>
 <tr><td class='code'>Email.Attachment[] <i>attachments</i></td><td>Attachments</td></tr>
@@ -172,6 +182,25 @@ alone is set, the structure will <b>not</b> create a non-HTML version of the con
 <tr><td class='code'>string <i>fileName</i></td><td>File name</td></tr>
 </table>
 
+<h3>jaypha.inet.imf.writing</h3>
+
+<dt class="d_decl">struct <a name="Mailbox"></a><span class="funcName">Mailbox</span></dt>
+<dd><p> A container for email addresses.</p><p>Mailbox is used to format email addresses
+for IMF headers.</p>
+
+<p><b>Properties:</b></p>
+<table class='parms'>
+<tr><td class='code'>string <i>address</i></td><td>Email address</td></tr>
+<tr><td class='code'>string <i>name</i></td><td>Optional name for the person</td></tr>
+</table>
+<p><b>Example:</b></p>
+<pre>
+  auto mb = Mailbox("abc@abc.net", "John Abc");
+  assert(mb.asString == "John Abc &lt;abc@abc.net>");
+
+  mb = Mailbox("abc@abc.net");
+  assert(mb.asString == "abc@abc.net");
+</pre>
 </dl>
 
 <h2>Appendix: Relevant RFCs</h2>

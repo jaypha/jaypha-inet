@@ -25,7 +25,9 @@ void main(string args[])
 
   email.subject = "Subject";
   email.from = Mailbox("jason@jaypha.com.au", "Jason den Dulk");
-  email.to = [ Mailbox("anyone@anything.net") ];
+  email.to = "anyone@anything.net";
+  email.cc = [ "abc@abc.net", "xyz@xyz.net" ];
+  email.bcc = Mailbox("123@123.net");
 
   auto a = appender!string();
   email.copy(a);

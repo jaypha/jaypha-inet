@@ -41,8 +41,33 @@ struct Email
   { headers ~= unstructuredHeader(name,fieldBody); }
 
   string subject;
-  Mailbox from;
-  Mailbox[] to, cc, bcc;
+
+  private Mailbox _from;
+  private Mailbox[] _to, _cc, _bcc;
+  @property
+  {
+    Mailbox from() { return _from; }
+    void from(Mailbox v) { _from = v; }
+    void from(string v) { _from = Mailbox(v); }
+
+    Mailbox[] to() { return _to; }
+    void to(Mailbox[] v) { _to = v; }
+    void to(string[] v) { _to = []; foreach(x;v) _to ~= Mailbox(x); }
+    void to(Mailbox v) { _to = [ v ]; }
+    void to(string v) { _to = [ Mailbox(v) ]; }
+
+    Mailbox[] cc() { return _cc; }
+    void cc(Mailbox[] v) { _cc = v; }
+    void cc(string[] v) { _cc = []; foreach(x;v) _cc ~= Mailbox(x); }
+    void cc(Mailbox v) { _cc = [ v ]; }
+    void cc(string v) { _cc = [ Mailbox(v) ]; }
+
+    Mailbox[] bcc() { return _bcc; }
+    void bcc(Mailbox[] v) { _bcc = v; }
+    void bcc(string[] v) { _bcc = []; foreach(x;v) _bcc ~= Mailbox(x); }
+    void bcc(Mailbox v) { _bcc = [ v ]; }
+    void bcc(string v) { _bcc = [ Mailbox(v) ]; }
+  }
 
   string text, html;
 
@@ -123,7 +148,7 @@ struct Email
     entity.headers ~= addressHeader("From", [ from ] );
     if (!to.empty) entity.headers ~= addressHeader("To", to);
     if (!cc.empty) entity.headers ~= addressHeader("Cc", cc);
-    if (!bcc.empty) entity.headers ~= addressHeader("Bcc", cc);
+    if (!bcc.empty) entity.headers ~= addressHeader("Bcc", bcc);
   
     entity.headers ~= headers;
     

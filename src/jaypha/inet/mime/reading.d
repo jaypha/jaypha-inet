@@ -83,6 +83,7 @@ unittest
 }
 
 //-----------------------------------------------------------------------------
+// Extracts a MIME token from the input string.
 
 string extractToken(ref string source)
 {
@@ -94,6 +95,7 @@ string extractToken(ref string source)
 }
 
 //-----------------------------------------------------------------------------
+// Extracts a quoted string token from the input string.
 
 string extractQuotedString(ref string source)
 {
@@ -230,7 +232,7 @@ void cpopFront(R)(ref R range) if (isInputRange!R)
 
 
 //-----------------------------------------------------------------------------
-// Reads in headers from a MIME documents. Unfolds multiline headers, but
+// Reads in headers from a MIME document. Unfolds multiline headers, but
 // does not perform any other lexing of header field bodies.
 // Does consume the empty line following headers.
 
@@ -343,6 +345,7 @@ unittest
 //-----------------------------------------------------------------------------
 // Multipart Entity Reader. Takes an input range and converts it into an
 // input range of Mime Entity Readers. Each element represents a Mime Entity.
+// Presumes that headers of the primary entity have already been extracted.
 
 import jaypha.algorithm;
 import jaypha.range;

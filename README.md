@@ -37,15 +37,6 @@ Todo
 
 Finish documentation.
 Implement "quoted-printable" encoding.
-Resolve struct/class issue for MIMEHeader
-
-For Discussion
---------------
-
-Currently MIME headers are handled using structs and functions. Considering
-that different MIME header types have specific rules about formatting and
-folding, it may be better to use class based polymorphinsm. If anyone would like to
-comment, please contact me.
 
 Current Problems
 ----------------

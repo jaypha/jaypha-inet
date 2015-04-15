@@ -3,7 +3,6 @@
   "description": "A struct for sending emails. Includes structures for handling IMF/MIME documents.",
   "authors": [ "Jason den Dulk" ],
   "license": "BSL-1.0",
-  "platforms": ["posix"],
   "targetType": "sourceLibrary",
   "importPaths": [ "src" ],
   "srcPaths": [ "src" ],
@@ -14,7 +13,6 @@
       "name": "sample",
       "libs-posix": [ "curl" ],
       "targetType": "executable",
-      "platforms": ["posix"],
       "mainSourceFile": "sample/sample.d"
     }
   ]
