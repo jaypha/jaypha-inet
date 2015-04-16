@@ -4,6 +4,7 @@
   "authors": [ "Jason den Dulk" ],
   "license": "BSL-1.0",
   "targetType": "sourceLibrary",
+  "dependencies": { "jaypha-base" : ">=1.0.0" },
   "importPaths": [ "src" ],
   "srcPaths": [ "src" ],
 
