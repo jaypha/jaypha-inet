@@ -64,46 +64,72 @@ Also included is a structure for constructing and sending emails.</p>
 
 <p>IMF (Internet Message Format) is the original format for sending emails on the Internet.
 MIME (Multimedia Internet Mail Extensions) is an extention to IMF for allowing mulitple
-media forms to be send via emsil. MIME is also used in other Internet protocols such as HTTP.
+media forms to be send via email. MIME is also used in other Internet protocols such as HTTP.
 </p>
 
 <h2>Requirements</h2>
 
-<p>This project requires the Jaypha-Base package, available through Dub and GitHub.</p>
+<p>This project requires the jaypha-base package, available through Dub and GitHub.</p>
 <p>Also required is the Curl library installed on your system.</p>
 
 <h2>Module Index</h2>
-<p>The modules are</p>
 <table>
  <tr><td>jaypha.inet.email</td><td>Structure for building emails.</td></tr>
  <tr><td>jaypha.inet.imf.writing</td><td>Code for writing IMF documents</td></tr>
- <tr><td>jaypha.inet.mime.content_disposition</td><td>Content-Disposition MIME header</td></tr>
- <tr><td>jaypha.inet.mime.content_type</td><td>Content-Type MIME header</td></tr>
+ <tr><td>jaypha.inet.mime.contentDisposition</td><td>Content-Disposition MIME header</td></tr>
+ <tr><td>jaypha.inet.mime.contentType</td><td>Content-Type MIME header</td></tr>
  <tr><td>jaypha.inet.mime.header</td><td>MIME headers</td></tr>
  <tr><td>jaypha.inet.mime.reading</td><td>Code to read MIME documents</td></tr>
  <tr><td>jaypha.inet.mime.writing</td><td>Code to write MIME documents</td></tr>
+ <tr><td>jaypha.inet.mime.types</td><td>MIME types and file extensions</td></tr>
 </table>
 
 <h2>Structure Index</h2>
-<p>The structures are</p>
 <table>
  <thead>
   <tr><th>Name</th><th>Module</th><th>Descritpion</th></tr>
  </thead>
  <tbody>
-  <tr><td>struct Email</td><td>jaypha.inet.email</td><td>Use to construct and send emails</td></tr>
-  <tr><td>struct Email.Attachment</td><td>jaypha.inet.email</td><td>Attachments for emails</td></tr>
+  <tr><td><a href='#Email'>struct Email</a></td><td>jaypha.inet.email</td><td>Use to construct and send emails</td></tr>
+  <tr><td><a href='#Email-Attachment'>struct Email.Attachment</a></td><td>jaypha.inet.email</td><td>Attachments for emails</td></tr>
   <tr><td>struct Mailbox</td><td>jaypha.inet.imf.writing</td><td>Email address used in IMF headers</td></tr>
   <tr><td>struct MimeContentDisposition</td><td>jaypha.inet.mime.content_disposition</td><td>Content-Disposition header</td></tr>
   <tr><td>struct MimeContentType</td><td>jaypha.inet.mime.content_type</td><td>Content-Type header</td></tr>
   <tr><td>struct MimeHeader</td><td>jaypha.inet.mime.header</td><td>Generic MIME header</td></tr>
-  <tr><td>struct MimeEntityReader</td><td>jaypha.inet.mime.reading</td><td>Reads MIME entitys</td></tr>
+  <tr><td>struct MimeEntityReader</td><td>jaypha.inet.mime.reading</td><td>Reads a MIME entity from input</td></tr>
   <tr><td>struct MimeEntity</td><td>jaypha.inet.mime.writing</td><td>Represents a MIME entity. Used for writing</td></tr>
  </tbody>
 </table>
 
-<h2>Function Index</h2>
+<h2>Property Index</h2>
+<table>
+ <thead>
+  <tr><th>Name</th><th>Module</th><th>Descritpion</th></tr>
+ </thead>
+ <tbody>
+  <tr><td>mimeVersion</td><td>jaypha.inet.mime.header</td><td>Provides a MIME-Version header</td></tr>
+  <tr><td>fileExtMimeTypes</td><td>jaypha.inet.mime.types</td><td>Associative array mapping file extensions to MIME types</td></tr>
+ </tbody>
+</table>
 
+<h2>Function Index</h2>
+<table>
+ <thead>
+  <tr><th>Name</th><th>Module</th><th>Descritpion</th></tr>
+ </thead>
+ <tbody>
+  <tr><td>imfFold</td><td>jaypha.inet.writing</td><td>Wraps a line to keep line length to a certian maximum length</td></tr>
+  <tr><td>unstructuredHeader</td><td>jaypha.inet.writing</td><td>Creates an IMF header for generic header types</td></tr>
+  <tr><td>addressHeader</td><td>jaypha.inet.writing</td><td>Creates an IMF header for address header types (from, to, cc etc)</td></tr>
+  <tr><td>toString</td><td>jaypha.inet.mime.header</td><td>Outputs MIME/IMF header to a string</td></tr>
+  <tr><td>extractMimeParams</td><td>jaypha.inet.mime.reading</td><td>Extracts paramters from a MIME header value string</td></tr>
+  <tr><td>parseMimeHeaders</td><td>jaypha.inet.mime.reading</td><td>Extracts and parses headers from an input range</td></tr>
+  <tr><td>mimeEntityReader</td><td>jaypha.inet.mime.reading</td><td>Creates a MimeEntityReader struct</td></tr>
+  <tr><td>mimeMultipartReader</td><td>jaypha.inet.mime.reading</td><td>Creates an input range of MimeEntityReaders. Used for reading multipart entities</td></tr>
+  <tr><td>extMimeType</td><td>jaypha.inet.mime.types</td><td>Returns the MIME type associated with an extension</td></tr>
+  <tr><td>fileMimeType</td><td>jaypha.inet.mime.types</td><td>Returns the MIME type associated with a file name</td></tr>
+ </tbody>
+</table>
 
 <h2>Reference</h2>
 
@@ -204,7 +230,7 @@ for IMF headers.</p>
 </dl>
 
 <h2>Appendix: Relevant RFCs</h2>
-<p>IMF is covered by</p>
+<p><b>IMF is covered by</b></p>
 
 <table>
  <tr><td>RFC5322</td><td>IMF specification (defines header syntax)</td></tr>
@@ -213,7 +239,7 @@ for IMF headers.</p>
  <tr><td>RFC2387</td><td>multipart/related</td></tr>
 </table>
 
-<p>MIME is covered by</p>
+<p><b>MIME is covered by</b></p>
 
 <table>
  <tr><td>RFC2045</td><td>Original MIME Specs</td></tr>
@@ -223,11 +249,18 @@ for IMF headers.</p>
  <tr><td>RFC2183, 2184, 2231</td><td>Content Disposition Header</td></tr>
 </table>
 
-<p>Other related RFCs</p>
+<p><b>Other related RFCs</b></p>
 
 <table>
  <tr><td>RFC4289</td><td>Registration Procedures for MIME</td></tr>
+ <tr><td>RFC4855</td><td>Media Type Registration of RTP Payload Formats</td></tr>
  <tr><td>RFC6838</td><td>Media Type Specifications and Registration Procedures</td></tr>
  <tr><td>RFC4021</td><td>Registration of Mail and MIME Header Fields</td></tr>
  <tr><td>RFC5321</td><td>Simple Mail Transfer Protocol</td></tr>
 </table>
+
+<p><b>Other Refernces</b></p>
+<p>
+<a href='http://www.iana.org/assignments/media-types/media-types.xhtml'>Registered MIME Types</a></br>
+<a href='http://www.stdicon.com/mimetypes'>Mime Type file Extensions (JSON)</a><br/>
+</p>

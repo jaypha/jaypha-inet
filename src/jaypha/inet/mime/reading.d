@@ -24,6 +24,7 @@ import std.array;
 import std.string;
 import std.range;
 import std.algorithm;
+import std.traits;
 
 //-----------------------------------------------------------------------------
 // extracts a single MIME parameter.
@@ -621,29 +622,29 @@ auto readUntil(R,E)(ref R r, E sentinel)
           if (idx == length)
           {
             idx = length = 0;
-            sentinel_check();
+            sentinelCheck();
           }
         }
         else
         {
           r.popFront();
-          if (r.empty) throw new Exception("malformed MIME Entity");
-          sentinel_check();
+          sentinelCheck();
         }
       }
     }
 
     //------------------------------------
 
-    void sentinel_check()
+    void sentinelCheck()
     {
+      if (r.empty) { empty = true; return; }
       if (r.front != sentinel[0]) return;
 
       do
       {
         r.popFront();
-        if (r.empty) throw new Exception("malformed MIME Entity");
         ++length;
+        if (r.empty) break;
       } while (length < sentinel.length && r.front == sentinel[length]);
 
       if (length == sentinel.length)
@@ -653,8 +654,8 @@ auto readUntil(R,E)(ref R r, E sentinel)
     //------------------------------------
 
     private:
-      uint length = 0;
-      uint idx = 0;
+      size_t length = 0;
+      size_t idx = 0;
   }
 
   return new ReadUntil();

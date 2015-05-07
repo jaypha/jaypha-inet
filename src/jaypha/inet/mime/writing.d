@@ -13,7 +13,7 @@
 module jaypha.inet.mime.writing;
 
 public import jaypha.inet.mime.header;
-public import jaypha.inet.mime.content_type;
+public import jaypha.inet.mime.contentType;
 import jaypha.inet.imf.writing;
 
 import std.base64;

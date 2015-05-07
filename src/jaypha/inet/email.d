@@ -16,7 +16,7 @@ import jaypha.types;
 
 public import jaypha.inet.imf.writing;
 import jaypha.inet.mime.writing;
-import jaypha.inet.mime.content_disposition;
+import jaypha.inet.mime.contentDisposition;
 
 import std.file;
 import std.process;
