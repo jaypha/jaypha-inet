@@ -15,6 +15,12 @@
       "libs-posix": [ "curl" ],
       "targetType": "executable",
       "mainSourceFile": "sample/sample.d"
+    },
+    {
+      "name": "test",
+      "libs-posix": [ "curl" ],
+      "targetType": "executable",
+      "mainSourceFile": "sample/test.d"
     }
   ]
 }

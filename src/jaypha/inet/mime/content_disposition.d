@@ -10,14 +10,7 @@
  * Authors: Jason den Dulk
  */
 
-/*
- * RFCs: 2183
- */
-
-/*
- * Deprecated. Use jaypha.inet.mime.contentDisposition
- */
-deprecated("Use jaypha.inet.mime.contentDisposition")
+deprecated("Use jaypha.inet.mime.contentdisposition")
 module jaypha.inet.mime.content_disposition;
 
-public import jaypha.inet.mime.contentDisposition;
+public import jaypha.inet.mime.contentdisposition;

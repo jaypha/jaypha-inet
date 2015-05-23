@@ -14,7 +14,7 @@
  * RFCs : 2045
  */
 
-module jaypha.inet.mime.contentType;
+module jaypha.inet.mime.contenttype;
 
 import jaypha.inet.mime.reading;
 import jaypha.inet.imf.writing;

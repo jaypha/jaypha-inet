@@ -11,9 +11,9 @@
  */
 
 /*
- * Deprecated. Use jaypha.inet.mime.contentType
+ * Deprecated. Use jaypha.inet.mime.contenttype
  */
-deprecated("Use jaypha.inet.mime.contentType")
+deprecated("Use jaypha.inet.mime.contenttype")
 module jaypha.inet.mime.content_type;
 
-public import jaypha.inet.mime.contentType;
+public import jaypha.inet.mime.contenttype;

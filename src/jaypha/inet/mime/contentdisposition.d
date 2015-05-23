@@ -14,7 +14,7 @@
  * RFCs: 2183
  */
 
-module jaypha.inet.mime.contentDisposition;
+module jaypha.inet.mime.contentdisposition;
 
 import jaypha.inet.mime.reading;
 import jaypha.inet.imf.writing;

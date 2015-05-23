@@ -1,0 +1,100 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns='http://www.w3.org/1999/xhtml' xml:lang='en' lang='en'>
+<!--
+  Documentation for Jaypha Inet.
+  Copyright 2015 Jaypha.
+  Distributed under the Boost Licence.
+  Written by Jason den Dulk.
+-->
+<head>
+ <title>Jaypha Inet - jaypha.inet.email</title>
+ <link rel='stylesheet' type='text/css' href='style.css'>
+</head>
+<body>
+<div class='body'>
+<div class='header'>
+ <img style='float:right' src='jaypha-94x24.gif'/>
+ <a href='_docs.html'>Back</a>
+ <div style='clear:both' ></div>
+</div>
+
+<h1>jaypha.inet.email</h1>
+
+<dt class="d_decl">struct <a name="Email"></a><span class="funcName">Email</span></dt>
+<dd><p> A structure for constructing and sending emails.</p>
+<p>To use Email, supply the properties with the appropriate values. Then call <i>sendmail</i> (Linux only)
+to send the email using the system sendmail program, or <i>send</i> to use Curl. You can 
+obtain a formatted copy using <i>copy</i>.</p>
+<p>If <i>text</i> or <i>html</i> is set, but not both, then that will become the plain
+content of the email. If both are set then a multipart/alternate entity will be created
+with <i>html</i> as the preferred alternative. This is consistant with convention. If <i>html</i>
+alone is set, the structure will <b>not</b> create a non-HTML version of the content.</p>
+
+<p><b>Example:</b></p>
+<p>
+<pre>
+  Email email;
+
+  email.text = "Main body part";
+  email.html = "&lt;p>Main body part&lt;/p>";
+
+  email.subject = "Subject";
+  email.from = Mailbox("jason@jaypha.com.au", "Jason den Dulk");
+  email.to = "anyone@anything.net";
+
+  email.attachments ~= Email.Attachment(
+    "Clown",
+    "image/jpeg",
+    getImageContentsFromSomewhere(),
+    "clown.jpg"
+  );
+
+  email.send();
+</pre></p>
+<p><b>Properties:</b></p>
+<table class='parms'>
+<tr><td class='code'>string <i>subject</i></td><td>Email subject</td></tr>
+<tr><td class='code'>Mailbox <i>from</i><br/>&nbsp;&nbsp;&nbsp;from(Mailbox v)<br/>&nbsp;&nbsp;&nbsp;from(string v)</td><td>Sender email address</td></tr>
+<tr><td class='code'>Mailbox[] <i>to</i><br/>&nbsp;&nbsp;&nbsp;to(Mailbox v)
+                        <br/>&nbsp;&nbsp;&nbsp;to(Mailbox[] v)
+                        <br/>&nbsp;&nbsp;&nbsp;to(string v)
+                        <br/>&nbsp;&nbsp;&nbsp;to(string[] v)
+                        </td><td>Standard recipients</td></tr>
+<tr><td class='code'>Mailbox[] <i>cc</i><br/>&nbsp;&nbsp;&nbsp;cc(Mailbox v)
+                        <br/>&nbsp;&nbsp;&nbsp;cc(Mailbox[] v)
+                        <br/>&nbsp;&nbsp;&nbsp;cc(string v)
+                        <br/>&nbsp;&nbsp;&nbsp;cc(string[] v)</td><td>Carbon copy (cc) recipients</td></tr>
+<tr><td class='code'>Mailbox[] <i>bcc</i><br/>&nbsp;&nbsp;&nbsp;bcc(Mailbox v)
+                        <br/>&nbsp;&nbsp;&nbsp;bcc(Mailbox[] v)
+                        <br/>&nbsp;&nbsp;&nbsp;bcc(string v)
+                        <br/>&nbsp;&nbsp;&nbsp;bcc(string[] v)</td><td>Blind carbon copy (bcc) recipients</td></tr>
+<tr><td class='code'>string <i>text</i></td><td>Unformatted text contents</td></tr>
+<tr><td class='code'>string <i>html</i></td><td>HTML formatted contents</td></tr>
+<tr><td class='code'>Email.Attachment[] <i>attachments</i></td><td>Attachments</td></tr>
+</table>
+<b>Mehtods:</b>
+<table class='parms'>
+<tr><td class='code'>addHeader</td><td>Adds a generic header.</td></tr>
+<tr><td class='code'>copy</td><td>Send a formatted copy to an output range.</td></tr>
+<tr><td class='code'>sendmail</td><td>Send via sendmail program (Linux only).</td></tr>
+<tr><td class='code'>send</td><td>Send via Curl (requires curl library).</td></tr>
+</table>
+
+</dd>
+
+<dt class="d_decl">struct <a name="Email-Attachment"></a><span class="funcName">Email.Attachment</span></dt>
+<dd><p> A structure for email attachments.</p>
+<p><b>Properties:</b></p>
+<table class='parms'>
+<tr><td class='code'>string <i>name</i></td><td>Title</td></tr>
+<tr><td class='code'>string <i>mimeType</i></td><td>MIME type</td></tr>
+<tr><td class='code'>immutable(ubyte)[] <i>content</i></td><td>Attachment contents</td></tr>
+<tr><td class='code'>string <i>fileName</i></td><td>File name</td></tr>
+</table>
+
+<p class='footer'>
+Copyright 2015 Jaypha
+</p>
+</div>
+</body>
+</html>

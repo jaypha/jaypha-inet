@@ -1,0 +1,47 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns='http://www.w3.org/1999/xhtml' xml:lang='en' lang='en'>
+<!--
+  Documentation for Jaypha Inet.
+  Copyright 2015 Jaypha.
+  Distributed under the Boost Licence.
+  Written by Jason den Dulk.
+-->
+<head>
+ <title>Jaypha Inet - jaypha.inet.imf.writing</title>
+ <link rel='stylesheet' type='text/css' href='style.css'>
+</head>
+<body>
+<div class='body'>
+<div class='header'>
+ <img style='float:right' src='jaypha-94x24.gif'/>
+ <a href='_docs.html'>Back</a>
+ <div style='clear:both' ></div>
+</div>
+
+<h1>jaypha.inet.imf.writing</h1>
+
+<dt class="d_decl">struct <a name="Mailbox"></a><span class="funcName">Mailbox</span></dt>
+<dd><p> A container for email addresses.</p><p>Mailbox is used to format email addresses
+for IMF headers.</p>
+
+<p><b>Properties:</b></p>
+<table class='parms'>
+<tr><td class='code'>string <i>address</i></td><td>Email address</td></tr>
+<tr><td class='code'>string <i>name</i></td><td>Optional name for the person</td></tr>
+</table>
+<p><b>Example:</b></p>
+<pre class='p'>
+  auto mb = Mailbox("abc@abc.net", "John Abc");
+  assert(mb.asString == "John Abc &lt;abc@abc.net>");
+
+  mb = Mailbox("abc@abc.net");
+  assert(mb.asString == "abc@abc.net");
+</pre>
+</dl>
+
+<p class='footer'>
+Copyright 2015 Jaypha
+</p>
+</div>
+</body>
+</html>

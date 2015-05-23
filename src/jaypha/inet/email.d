@@ -16,7 +16,7 @@ import jaypha.types;
 
 public import jaypha.inet.imf.writing;
 import jaypha.inet.mime.writing;
-import jaypha.inet.mime.contentDisposition;
+import jaypha.inet.mime.contentdisposition;
 
 import std.file;
 import std.process;
@@ -90,9 +90,8 @@ struct Email
       auto entity = build();
 
       auto pipes = pipeProcess(["sendmail","-t","-i"]);
-      auto wout = wOut(pipes.stdin);
+      auto wout = pipes.stdin.lockingTextWriter;
       entity.copy(wout);
-      //entity.copy(pipes.stdin);
       pipes.stdin.close();
       wait(pipes.pid);
     }
@@ -244,14 +243,5 @@ struct Email
 
     return entity;
   }
-}
-
-// Quick and dirty wrapper to make files act as ranges.
-
-struct wOut
-{
-  File file;
-
-  void put(ByteArray s) { file.rawWrite(s); }
 }
 
