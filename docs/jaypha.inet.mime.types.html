@@ -1,0 +1,72 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns='http://www.w3.org/1999/xhtml' xml:lang='en' lang='en'>
+<!--
+  Documentation for Jaypha Inet.
+  Copyright 2015 Jaypha.
+  Distributed under the Boost Licence.
+  Written by Jason den Dulk.
+-->
+<head>
+ <title>Jaypha Inet - jaypha.inet.mime.types</title>
+ <link rel='stylesheet' type='text/css' href='style.css'>
+</head>
+<body>
+<div class='body'>
+<div class='header'>
+ <img style='float:right' src='jaypha-94x24.gif'/>
+ <a href='_docs.html'>Back</a>
+ <div style='clear:both' ></div>
+</div>
+
+<h1>jaypha.inet.mime.types</h1>
+
+<p>This module associates typical file extensions with mime-types. All
+extensions are given in lower case.</p>
+
+<p>By default, this module will define only the most common ones used. To use
+a more extensive list, compile your application with the
+&quot;allMimeTypes&quot; version set.</p>
+
+<p>The list of extensions and their mime type mappings were obtained from
+<a href='http://www.stdicon.com/mimetypes'>http://www.stdicon.com/mimetypes</a></p>
+
+<p><b>Warning:</b> There is no formal standard for file extensions, and many
+extensions are 'claimed' by multiple vendors. There is also no rule enforcing
+the use of 'correct' file extrensions.</p>
+
+<dt class="d_decl">immutable string[string] <a name="fileExtMimeTypes"></a><span class="funcName">fileExtMimeTypes</span></dt>
+<dd><p>An associative array mapping file extensions to mime types.</p></dd>
+
+<dt class="d_decl">string <a name="extMimeType"></a><span class="funcName">extMimeType</span>(string ext)</dt>
+<dd><p>Returns the mime type associated with the extension.</p>
+
+<p><b>Parameters:</b></p>
+<table class='parms'>
+<tr><td class='code'>string <i>ext</i></td><td>The extension (case insensitive).</td></tr>
+</table>
+
+<p><b>Returns:</b><br>The mime type of the extension. If one is not found,
+returns 'application/octet-stream' by default.</p>
+
+</dd>
+
+<dt class="d_decl">string <a name="fileMimeType"></a><span class="funcName">fileMimeType</span>(string filename)</dt>
+<dd><p>Returns the mime type associated with a filename. This function extracts
+the extension from the filename (the content following the last '.').</p>
+
+<p><b>Parameters:</b></p>
+<table class='parms'>
+<tr><td class='code'>string <i>filename</i></td><td>The filename (case insensitive).</td></tr>
+</table>
+
+<p><b>Returns:</b><br>The mime type of the filename. If one is not found,
+or if no extension is found, returns 'application/octet-stream' by default.</p>
+
+</dd>
+
+<p class='footer'>
+Copyright 2015 Jaypha
+</p>
+</div>
+</body>
+</html>

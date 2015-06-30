@@ -1,0 +1,162 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns='http://www.w3.org/1999/xhtml' xml:lang='en' lang='en'>
+<!--
+  Documentation for Jaypha Inet.
+  Copyright 2015 Jaypha.
+  Distributed under the Boost Licence.
+  Written by Jason den Dulk.
+-->
+<head>
+ <title>Jaypha Inet - jaypha.inet.mime.reading</title>
+ <link rel='stylesheet' type='text/css' href='style.css'>
+</head>
+<body>
+<div class='body'>
+<div class='header'>
+ <img style='float:right' src='jaypha-94x24.gif'/>
+ <a href='_docs.html'>Back</a>
+ <div style='clear:both' ></div>
+</div>
+
+<h1>jaypha.inet.mime.reading</h1>
+
+<h3>How to read a MIME document</h3>
+<p>To read a MIME document, convert it (if needed) to an input range of
+<span class='code'>ubyte</span>. Pass this to
+<a href='#mimeEntityReader'>mimeEntityReader</a>. You will be given a
+<a href='#MimeEntityReader'>MimeEntityReader</a> instance. The headers will be
+available as a array of <a href='jaypha.inet.mime.header.html#MimeHeader'>MimeHeader</a>.
+The body of the entity will be accessible with the headers and intervening blank line
+removed.</p>
+
+<p>To read a multipart MIME document, use
+<a href='#mimeEntityReader'>mimeEntityReader</a> as usual. If
+the Content-Type is a multipart type, the content can be passed to
+<a href='#mimeMultipartReader'>mimeMultipartReader</a>, which creates an input
+range of <a href='#MimeEntityReader'>MimeEntityReader</a>.</p>
+
+<dt class="d_decl">void <a name="extractMimeParams"></a><span class="funcName">extractMimeParams</span>(string source, ref string[string] parameters)</dt>
+<dd><p>Extracts MIME parameters from the given string.</p>
+<p>MIME parameters appear in headers and are of the format *(';' attribute '=' value).</p>
+<p>Spaces and comments are skipped both before and after the parameter list.</p>
+<p>See <a href='http://tools.ietf.org/html/rfc2045'>RFC2045</a> for more info.</p>
+
+<p><b>Parameters:</b></p>
+<table class='parms'>
+<tr><td class='code'>string <i>source</i></td><td>Source string</td></tr>
+<tr><td class='code'>string <i>parameters</i></td><td>Wher the parameter is stored under the name index.</td></tr>
+</table>
+
+</dd>
+
+<dt class="d_decl">string <a name="extractToken"></a><span class="funcName">extractToken</span>(ref string source)</dt>
+<dd><p>Extracts a MIME Token from the given string. The string is updated
+to be the remainder of the string</p>
+
+<p><b>Parameters:</b></p>
+<table class='parms'>
+<tr><td class='code'>ref string <i>source</i></td><td>Source string</td></tr>
+</table>
+
+<p><b>Returns:</b><br>The token.</p>
+
+</dd>
+
+<dt class="d_decl">string <a name="extractQuotedString"></a><span class="funcName">extractQuotedString</span>(ref string source)</dt>
+<dd><p>Extracts a MIME quoted string from the given string. The string is updated
+to be the remainder of the string</p>
+
+<p><b>Parameters:</b></p>
+<table class='parms'>
+<tr><td class='code'>ref string <i>source</i></td><td>Source string</td></tr>
+</table>
+
+<p><b>Returns:</b><br>The extracted string.</p>
+</dd>
+
+<dt class="d_decl">MIMEHeader[] <a name="parseMimeHeaders"></a><span class="funcName">parseMimeHeaders</span>(BR)(ref BR reader)
+  if ((isInputRange!BR &amp;&amp; is(ElementType!BR : ubyte)))</dt>
+
+<dd><p>Reads in headers from a MIME document. Unfolds multiline headers, but
+ does not perform any other lexing of header field bodies.
+ The headers are consumed from the input range, as well as the following empty line.</p>
+
+<p><b>Template Parameters:</b></p>
+<table class='parms'>
+<tr><td class='code'>BR</td><td>Input Range of element type <span class='code'>ubyte</code></td></tr>
+</table>
+<p><b>Parameters:</b></p>
+<table class='parms'>
+<tr><td class='code'>BR <i>reader</i></td><td>Input range being read.</td></tr>
+</table>
+
+<p><b>Returns:</b><br>An array of <a href='jaypha.inet.mime.header.html#MimeHeader'>MIMEHeader</a>.</p>
+</dd>
+
+<dt class="d_decl">auto <a name="mimeEntityReader"></a><span class="funcName">mimeEntityReader</span>(BR)(BR source)
+  if ((isInputRange!BR &amp;&amp; is(ElementType!BR : ubyte)))</dt>
+
+<dd>
+<p>Reads a MIME Entity. Takes an input range representing a MIME document, extracts
+the headers (and the trailing blank line) and presents the rest for further reading.</p>
+
+<p><b>Template Parameters:</b></p>
+<table class='parms'>
+<tr><td class='code'>BR</td><td>Input Range of element type <span class='code'>ubyte</code></td></tr>
+</table>
+<p><b>Parameters:</b></p>
+<table class='parms'>
+<tr><td class='code'>BR <i>reader</i></td><td>Input range being read.</td></tr>
+</table>
+
+<p><b>Returns:</b><br>A MimeEntityReader.</p>
+</dd>
+
+<dt class="d_decl">struct <a name="MimeEntityReader"></a><span class="funcName">MimeEntityReader</span>(BR)
+  if ((isInputRange!BR &amp;&amp; is(ElementType!BR : ubyte)))</dt>
+
+<dd>
+<p>Contains a MIME Entity suitable for reading. You should create a
+MimeEntityReader instance indirectly using mimeEntityReader.</p>
+
+<p><b>Template Parameters:</b></p>
+<table class='parms'>
+<tr><td class='code'>BR</td><td>Input Range of element type <span class='code'>ubyte</code></td></tr>
+</table>
+<p><b>Properties:</b></p>
+<table class='parms'>
+<tr><td class='code'>MimeHeader[] <i>headers</i></td><td>MimeHeaders extracted form the entity.</td></tr>
+<tr><td class='code'>BR <i>content</i></td><td>The content of the entity. The content excludes the headers and the blank line separator.</td></tr>
+</table>
+
+</dd>
+
+<dt class="d_decl">auto <a name="mimeMultipartReader"></a><span class="funcName">mimeMultipartReader</span>(BR)(ref BR source, string boundary)
+  if ((isInputRange!BR &amp;&amp; is(ElementType!BR : ubyte)))</dt>
+
+<dd>
+<p>Multipart Entity Reader. Takes an input range and converts it into an
+ input range of Mime Entity Readers. Each element represents a Mime Entity.
+ Presumes that headers of the primary entity have already been extracted.</p>
+<p>Any preamble or epilogue is ignored.</p>
+
+<p><b>Template Parameters:</b></p>
+<table class='parms'>
+<tr><td class='code'>BR</td><td>Input Range of element type <span class='code'>ubyte</code></td></tr>
+</table>
+<p><b>Properties:</b></p>
+<table class='parms'>
+<tr><td class='code'>MimeHeader[] <i>headers</i></td><td>MimeHeaders extracted form the entity.</td></tr>
+<tr><td class='code'>BR <i>content</i></td><td>The content of the entity. The content excludes the headers and the blank line separator.</td></tr>
+</table>
+
+<p><b>Returns:</b><br>An input range of MimeEntityReader.</p>
+
+</dd>
+
+<p class='footer'>
+Copyright 2015 Jaypha
+</p>
+</div>
+</body>
+</html>

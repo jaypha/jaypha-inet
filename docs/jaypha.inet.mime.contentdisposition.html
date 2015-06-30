@@ -1,0 +1,76 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns='http://www.w3.org/1999/xhtml' xml:lang='en' lang='en'>
+<!--
+  Documentation for Jaypha Inet.
+  Copyright 2015 Jaypha.
+  Distributed under the Boost Licence.
+  Written by Jason den Dulk.
+-->
+<head>
+ <title>Jaypha Inet - jaypha.inet.mime.contentdisposition</title>
+ <link rel='stylesheet' type='text/css' href='style.css'>
+</head>
+<body>
+<div class='body'>
+<div class='header'>
+ <img style='float:right' src='jaypha-94x24.gif'/>
+ <a href='_docs.html'>Back</a>
+ <div style='clear:both' ></div>
+</div>
+
+<h1>jaypha.inet.mime.contentdisposition</h1>
+
+<p>A structure for MIME Content-Disposition headers.</p>
+
+<p>The MIME content disposition header is defined in
+<a href='http://tools.ietf.org/html/rfc2183'>RFC2183</a>, updated by <a href='http://tools.ietf.org/html/rfc2231'>RFC2231</a>.</p>
+<p>The MIME content disposition provides extra information for the handling of the data,
+and is typically included as part of mulitpart documents. For example, it can specify whether the data
+is a part of the larger document (inline), separate (attachment), or part of a form submission (form-data).</p>
+
+<p>MIME content disposition headers can also provide extra information in the form
+of parameters. The parameters are given in the format of &lt;attribute>=&lt;value>, separated by &quot;;&quot;.
+The value can be in quotes and comments are allowed as per RFC2822.</p>
+<p><b>Example</b></p>
+<p class='code'>Content-Disposition: form-data; name="icon"; filename="arrow.png"</p>
+<p>The data is part of a form submission. There are two parameters: &quot;name&quot; and &quot;filename&quot;
+with values &quot;icon&quot; and &quot;arrow.png&quot; respectively.
+
+<dt class="d_decl">struct <a name="MimeContentDisposition"></a><span class="funcName">MimeContentDisposition</span></dt>
+<dd><p>MIME Content-Disposition.</p>
+<p>Use this for creating/reading/storing information relevant to Content-Disposition MIME headers.</p>
+<p>Use <span class='code'>extractMimeContentDispoisition</span> to read form input, and <span class='code'>toMimeHeader</span> to prepare for output.</p>
+
+<p><b>Properties:</b></p>
+<table class='parms'>
+<tr><td class='code'>enum <i>headerName</i></td><td>The name of the header. Is &quot;Content-Disposition&quot;</td></tr>
+<tr><td class='code'>string <i>type</i></td><td>The disposition type. Defaults to &quot;inline&quot;</td></tr>
+<tr><td class='code'>string[string] <i>parameters</i></td><td>Parameters associated with the header.</td></tr>
+</table>
+</dd>
+
+<dt class="d_decl">MimeContentDisposition <a name="extractMimeContentDisposition"></a><span class="funcName">extractMimeContentDisposition</span>(string fieldBody)</dt>
+<dd><p>Extracts content disposition details from a fieldBody. Comments are discarded.</p>
+<p><b>Parameters:</b></p>
+<table class='parms'>
+<tr><td class='code'>string <i>fieldBody</i></td><td>The field body source.</td></tr>
+</table>
+<b>Returns:</b><br>A MimeContentDisposition struct containing the extracted data.
+</dd>
+
+<dt class="d_decl">MimeHeader <a name="toMimeHeader"></a><span class="funcName">toMimeHeader</span>(ref MimeContentDisposition contentType, bool asImf = false)</dt>
+<dd><p>&quot;Writes&quot; the content type to a MimeHeader.</p>
+<p><b>Parameters:</b></p>
+<table class='parms'>
+<tr><td class='code'>ref MimeContentDisposition <i>contentDisp</i></td><td>The content disposition structure.</td></tr>
+<tr><td class='code'>bool <i>asImf</i></td><td>If true, will perform line folding as required for IMF.</td></tr>
+</table>
+<b>Returns:</b><br>A MimeHeader defining the content disposition.
+</dd>
+
+<p class='footer'>
+Copyright 2015 Jaypha
+</p>
+</div>
+</body>
+</html>

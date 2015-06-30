@@ -1,0 +1,73 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns='http://www.w3.org/1999/xhtml' xml:lang='en' lang='en'>
+<!--
+  Documentation for Jaypha Inet.
+  Copyright 2015 Jaypha.
+  Distributed under the Boost Licence.
+  Written by Jason den Dulk.
+-->
+<head>
+ <title>Jaypha Inet - jaypha.inet.mime.contenttype</title>
+ <link rel='stylesheet' type='text/css' href='style.css'>
+</head>
+<body>
+<div class='body'>
+<div class='header'>
+ <img style='float:right' src='jaypha-94x24.gif'/>
+ <a href='_docs.html'>Back</a>
+ <div style='clear:both' ></div>
+</div>
+
+<h1>jaypha.inet.mime.contenttype</h1>
+
+<p>A structure for MIME Content-Type headers.</p>
+
+<p>The MIME content type header is defined in
+<a href='http://tools.ietf.org/html/rfc2045'>RFC2045</a>.</p>
+<p>The MIME content type value, usually refered to as the &quot;mime type&quot;, is
+given in the form (&lt;type>/&lt;subtype>).</p>
+<p>MIME content type headers can also provide extra information in the form
+of parameters. The parameters are given in the format of &lt;attribute>=&lt;value>, separated by &quot;;&quot;.
+The value can be in quotes and comments are allowed as per RFC822.</p>
+<p><b>Example</b></p>
+<p class='code'>Content-Type: text/plain; charset=us-ascii (Plain text)</p>
+<p>The mime type is &quot;text/plain&quot;. There is one parameter, &quot;charset&quot; of value &quot;us-ascii&quot;.
+
+<dt class="d_decl">struct <a name="MimeContentType"></a><span class="funcName">MimeContentType</span></dt>
+<dd><p>MIME Content-Type.</p>
+<p>Use this for creating/reading/storing information relevant to Content-Type MIME headers.</p>
+<p>Use <span class='code'>extractMimeContentType</span> to read form input, and <span class='code'>toMimeHeader</span> to prepare for output.</p>
+
+<p><b>Properties:</b></p>
+<table class='parms'>
+<tr><td class='code'>enum <i>headerName</i></td><td>The name of the header. Is &quot;Content-Type&quot;</td></tr>
+<tr><td class='code'>string <i>type</i></td><td>The full content type</td></tr>
+<tr><td class='code'>string[string] <i>parameters</i></td><td>Parameters associated with the header.</td></tr>
+</table>
+</dd>
+
+<dt class="d_decl">MimeContentType <a name="extractMimeContentType"></a><span class="funcName">extractMimeContentType</span>(string fieldBody)</dt>
+<dd><p>Extracts content type details from a fieldBody. Comments are discarded.</p>
+<p><b>Parameters:</b></p>
+<table class='parms'>
+<tr><td class='code'>string <i>fieldBody</i></td><td>The field body source.</td></tr>
+</table>
+<b>Returns:</b><br>A MimeContentType struct containing the extracted data.
+</dd>
+
+<dt class="d_decl">MimeHeader <a name="toMimeHeader"></a><span class="funcName">toMimeHeader</span>(ref MimeConentType contentType, bool asImf = false)</dt>
+<dd><p>&quot;Writes&quot; the content type to a MimeHeader.</p>
+<p><b>Parameters:</b></p>
+<table class='parms'>
+<tr><td class='code'>ref MimeContentType <i>contentType</i></td><td>The content type structure.</td></tr>
+<tr><td class='code'>bool <i>asImf</i></td><td>If true, will perform line folding as required for IMF.</td></tr>
+</table>
+<b>Returns:</b><br>A MimeHeader defining the content type.
+</dd>
+
+<p class='footer'>
+Copyright 2015 Jaypha
+</p>
+</div>
+</body>
+</html>

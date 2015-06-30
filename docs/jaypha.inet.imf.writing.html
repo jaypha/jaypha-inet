@@ -20,6 +20,12 @@
 
 <h1>jaypha.inet.imf.writing</h1>
 
+<dt class="d_decl">enum <a name="ImfMaxLineLength"></a><span class="funcName">ImfMaxLineLength</span></dt>
+<dd><p>The maxmimum length of a line in IMF. It is set to 998.</p></dd>
+
+<dt class="d_decl">enum <a name="ImfRecLineLength"></a><span class="funcName">ImfRecLineLength</span></dt>
+<dd><p>The recommended maxmimum length of a line in IMF. It is set to 78.</p></dd>
+
 <dt class="d_decl">struct <a name="Mailbox"></a><span class="funcName">Mailbox</span></dt>
 <dd><p> A container for email addresses.</p><p>Mailbox is used to format email addresses
 for IMF headers.</p>
@@ -37,7 +43,48 @@ for IMF headers.</p>
   mb = Mailbox("abc@abc.net");
   assert(mb.asString == "abc@abc.net");
 </pre>
-</dl>
+</dd>
+
+<dt class="d_decl">string <a name="imfFold"></a><span class="funcName">imfFold</span>(string content, ulong additional, out ulong lastLineLength)</dt>
+<dd><p>Performs line folding to prevent a maximum line length from being exceeded. The
+       line length maximum is given in <span class='code'>ImfMaxLineLength</span>.
+</p>
+
+<b>Parameters:</b>
+<table class='parms'>
+<tr><td class='code'>string <i>content</i></td><td>The input text</td></tr>
+<tr><td class='code'>ulong <i>additional</i></td><td>Subtracted from the max length of the first line.</td></tr>
+<tr><td class='code'>out ulong <i>lastLineLength</i></td><td>The length of the last line.</td></tr>
+</table>
+<b>Returns:</b><br>The folded text.
+</dd>
+
+<dt class="d_decl">MimeHeader <a name="unstructuredHeader"></a><span class="funcName">unstructuredHeader</span>(string name, string fieldBody)</dt>
+<dd><p>Constructs an unstructured (generic) IMF header. Lines are folded. This
+function can be used for most headers. Some headers have special folding rules
+and require their own function.</p>
+
+<b>Parameters:</b>
+<table class='parms'>
+<tr><td class='code'>string <i>name</i></td><td>Header name</td></tr>
+<tr><td class='code'>string <i>fieldBody</i></td><td>Header field body.</td></tr>
+</table>
+<b>Returns:</b><br>A MimeHeader struct. The field body is folded.
+</dd>
+
+<dt class="d_decl">MimeHeader <a name="addressHeader"></a><span class="funcName">addressHeader</span>(string name, string fieldBody)</dt>
+<dd><p>Constructs an IMF header for address headers (from, to, cc, bcc).
+Address headers have special folding requirements necessitating a separate
+function.</p>
+
+<b>Parameters:</b>
+<table class='parms'>
+<tr><td class='code'>string <i>name</i></td><td>Header name</td></tr>
+<tr><td class='code'>MailBox[] <i>addresses</i></td><td>The addresses to be included in the header.</td></tr>
+</table>
+<b>Returns:</b><br>A MimeHeader struct. The field body is formatted and folded according
+to RFC5322.
+</dd>
 
 <p class='footer'>
 Copyright 2015 Jaypha

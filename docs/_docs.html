@@ -38,12 +38,13 @@ media forms to be send via email. MIME is also used in other Internet protocols 
 <table>
  <tr><td><a href='jaypha.inet.email.html'>jaypha.inet.email</a></td><td>Structure for building emails.</td></tr>
  <tr><td><a href='jaypha.inet.imf.writing.html'>jaypha.inet.imf.writing</a></td><td>Code for writing IMF documents</td></tr>
- <tr><td>jaypha.inet.mime.contentdisposition</td><td>Content-Disposition MIME header</td></tr>
- <tr><td>jaypha.inet.mime.contenttype</td><td>Content-Type MIME header</td></tr>
- <tr><td>jaypha.inet.mime.header</td><td>MIME headers</td></tr>
- <tr><td>jaypha.inet.mime.reading</td><td>Code to read MIME documents</td></tr>
- <tr><td>jaypha.inet.mime.writing</td><td>Code to write MIME documents</td></tr>
- <tr><td>jaypha.inet.mime.types</td><td>MIME types and file extensions</td></tr>
+ <tr><td><a href='jaypha.inet.mime.contentdisposition.html'>jaypha.inet.mime.contentdisposition</a></td><td>Content-Disposition MIME header</td></tr>
+ <tr><td><a href='jaypha.inet.mime.contenttype.html'>jaypha.inet.mime.contenttype</a></td><td>Content-Type MIME header</td></tr>
+ <tr><td><a href='jaypha.inet.mime.header.html'>jaypha.inet.mime.header</a></td><td>MIME headers</td></tr>
+ <tr><td><a href='jaypha.inet.mime.quotedprintable.html'>jaypha.inet.mime.quotedprintable</a></td><td>MIME Quoted Printable Encoding</td></tr>
+ <tr><td><a href='jaypha.inet.mime.reading.html'>jaypha.inet.mime.reading</a></td><td>Code to read MIME documents</td></tr>
+ <tr><td><a href='jaypha.inet.mime.types.html'>jaypha.inet.mime.types</a></td><td>MIME types and file extensions</td></tr>
+ <tr><td><a href='jaypha.inet.mime.writing.html'>jaypha.inet.mime.writing</a></td><td>Code to write MIME documents</td></tr>
 </table>
 
 <h2>Structure Index</h2>
@@ -54,23 +55,26 @@ media forms to be send via email. MIME is also used in other Internet protocols 
  <tbody>
   <tr><td><a href='jaypha.inet.email.html#Email'>struct Email</a></td><td>jaypha.inet.email</td><td>Use to construct and send emails</td></tr>
   <tr><td><a href='jaypha.inet.email.html#Email-Attachment'>struct Email.Attachment</a></td><td>jaypha.inet.email</td><td>Attachments for emails</td></tr>
-  <tr><td><a href='jaypha.inet.imf.writing.html'>struct Mailbox</a></td><td>jaypha.inet.imf.writing</td><td>Email address used in IMF headers</td></tr>
-  <tr><td>struct MimeContentDisposition</td><td>jaypha.inet.mime.contentdisposition</td><td>Content-Disposition header</td></tr>
-  <tr><td>struct MimeContentType</td><td>jaypha.inet.mime.contenttype</td><td>Content-Type header</td></tr>
-  <tr><td>struct MimeEntityReader</td><td>jaypha.inet.mime.reading</td><td>Reads a MIME entity from input</td></tr>
-  <tr><td>struct MimeEntity</td><td>jaypha.inet.mime.writing</td><td>Represents a MIME entity. Used for writing</td></tr>
-  <tr><td>struct MimeHeader</td><td>jaypha.inet.mime.header</td><td>Generic MIME header</td></tr>
+  <tr><td><a href='jaypha.inet.imf.writing.html#Mailbox'>struct Mailbox</a></td><td>jaypha.inet.imf.writing</td><td>Email address used in IMF headers</td></tr>
+  <tr><td><a href='jaypha.inet.mime.contentdisposition.html#MimeContentDisposition'>struct&nbsp;MimeContentDisposition</a></td><td>jaypha.inet.mime.contentdisposition</td><td>Content-Disposition header</td></tr>
+  <tr><td><a href='jaypha.inet.mime.contenttype.html#MimeContentType'>struct MimeContentType</a></td><td>jaypha.inet.mime.contenttype</td><td>Content-Type header</td></tr>
+  <tr><td><a href='jaypha.inet.mime.reading.html#MimeEntityReader'>struct MimeEntityReader</a></td><td>jaypha.inet.mime.reading</td><td>Reads a MIME entity from input</td></tr>
+  <tr><td><a href='jaypha.inet.mime.writing.html#MimeEntity'>struct MimeEntity</a></td><td>jaypha.inet.mime.writing</td><td>Represents a MIME entity. Used for writing</td></tr>
+  <tr><td><a href='jaypha.inet.mime.header.html#MimeHeader'>struct MimeHeader</a></td><td>jaypha.inet.mime.header</td><td>MIME header</td></tr>
  </tbody>
 </table>
 
-<h2>Property Index</h2>
+<h2>Property and Constant (enum) Index</h2>
 <table>
  <thead>
   <tr><th>Name</th><th>Module</th><th>Descritpion</th></tr>
  </thead>
  <tbody>
-  <tr><td>fileExtMimeTypes</td><td>jaypha.inet.mime.types</td><td>Associative array mapping file extensions to MIME types</td></tr>
-  <tr><td>mimeVersion</td><td>jaypha.inet.mime.header</td><td>Provides a MIME-Version header</td></tr>
+  <tr><td><a href='jaypha.inet.mime.types.html#fileExtMimeTypes'>fileExtMimeTypes</a></td><td>jaypha.inet.mime.types</td><td>Associative array mapping file extensions to MIME types</td></tr>
+  <tr><td><a href='jaypha.inet.imf.writing.html#ImfMaxLineLength'>enum ImfMaxLineLength</a></td><td>jaypha.inet.imf.writing</td><td>Maximum allowable IMF line length</td></tr>
+  <tr><td><a href='jaypha.inet.imf.writing.html#ImfRecLineLength'>enum ImfRecLineLength</a></td><td>jaypha.inet.imf.writing</td><td>Recommended maximum IMF line length</td></tr>
+  <tr><td><a href='jaypha.inet.mime.header.html#MimeEoln'>enum MimeEoln</td><td>jaypha.inet.mime.header</a></td><td>End of line sequence used in IMF and MIME</td></tr>
+  <tr><td><a href='jaypha.inet.mime.header.html#mimeVersion'>MimeHeader&nbsp;mimeVersion</a></td><td>jaypha.inet.mime.header</td><td>Provides a MIME-Version header</td></tr>
  </tbody>
 </table>
 
@@ -80,51 +84,57 @@ media forms to be send via email. MIME is also used in other Internet protocols 
   <tr><th>Name</th><th>Module</th><th>Descritpion</th></tr>
  </thead>
  <tbody>
-  <tr><td>addressHeader</td><td>jaypha.inet.writing</td><td>Creates an IMF header for address header types (from, to, cc etc)</td></tr>
-  <tr><td>extractMimeParams</td><td>jaypha.inet.mime.reading</td><td>Extracts paramters from a MIME header value string</td></tr>
-  <tr><td>extMimeType</td><td>jaypha.inet.mime.types</td><td>Returns the MIME type associated with an extension</td></tr>
-  <tr><td>fileMimeType</td><td>jaypha.inet.mime.types</td><td>Returns the MIME type associated with a file name</td></tr>
-  <tr><td>imfFold</td><td>jaypha.inet.writing</td><td>Wraps a line to keep line length to a certian maximum length</td></tr>
-  <tr><td>mimeEntityReader</td><td>jaypha.inet.mime.reading</td><td>Creates a MimeEntityReader struct</td></tr>
-  <tr><td>mimeMultipartReader</td><td>jaypha.inet.mime.reading</td><td>Creates an input range of MimeEntityReaders. Used for reading multipart entities</td></tr>
-  <tr><td>parseMimeHeaders</td><td>jaypha.inet.mime.reading</td><td>Extracts and parses headers from an input range</td></tr>
-  <tr><td>quotedPrintableEncode</td><td>jaypha.inet.mime.quotedprintable</td><td>MIME Quoted Printable Encoding</td></tr>
-  <tr><td>unstructuredHeader</td><td>jaypha.inet.writing</td><td>Creates an IMF header for generic header types</td></tr>
-  <tr><td>toString</td><td>jaypha.inet.mime.header</td><td>Outputs MIME/IMF header to a string</td></tr>
+  <tr><td><a href='jaypha.inet.imf.writing.html#addressHeader'>addressHeader</a></td><td>jaypha.inet.writing</td><td>Creates an IMF header for address header types (from, to, cc etc)</td></tr>
+  <tr><td><a href='jaypha.inet.mime.reading.html#extractMimeParams'>extractMimeParams</td><td>jaypha.inet.mime.reading</td><td>Extracts paramters from a MIME header value string</td></tr>
+  <tr><td><a href='jaypha.inet.mime.reading.html#extractQuotedString'>extractQuotedString</td><td>jaypha.inet.mime.reading</td><td>Extracts a token from a MIME header value string</td></tr>
+  <tr><td><a href='jaypha.inet.mime.reading.html#extractToken'>extractToken</td><td>jaypha.inet.mime.reading</td><td>Extracts a quoted string from a MIME header value string</td></tr>
+  <tr><td><a href='jaypha.inet.mime.contentdisposition.html#extractMimeContentDisposition'>extractMimeContentDisposition</a></td><td>jaypha.inet.mime.contentdisposition</td><td>Extracts data from a Content-Type MIME header field body</td></tr>
+  <tr><td><a href='jaypha.inet.mime.contenttype.html#extractMimeContentType'>extractMimeContentType</a></td><td>jaypha.inet.mime.contenttype</td><td>Extracts data from a Content-Type MIME header field body</td></tr>
+  <tr><td><a href='jaypha.inet.mime.types.html#extMimeType'>extMimeType</a></td><td>jaypha.inet.mime.types</td><td>Returns the MIME type associated with an extension</td></tr>
+  <tr><td><a href='jaypha.inet.mime.types.html#fileMimeType'>fileMimeType</a></td><td>jaypha.inet.mime.types</td><td>Returns the MIME type associated with a file name</td></tr>
+  <tr><td><a href='jaypha.inet.imf.writing.html#imfFold'>imfFold</a></td><td>jaypha.inet.writing</td><td>Wraps a line to keep line length to a certian maximum length</td></tr>
+  <tr><td><a href='jaypha.inet.mime.reading.html#mimeEntityReader'>mimeEntityReader</a></td><td>jaypha.inet.mime.reading</td><td>Creates a MimeEntityReader struct</td></tr>
+  <tr><td><a href='jaypha.inet.mime.reading.html#mimeMultipartReader'>mimeMultipartReader</a></td><td>jaypha.inet.mime.reading</td><td>Creates an input range of MimeEntityReaders. Used for reading multipart entities</td></tr>
+  <tr><td><a href='jaypha.inet.mime.reading.html#parseMimeHeaders'>parseMimeHeaders</a></td><td>jaypha.inet.mime.reading</td><td>Extracts and parses headers from an input range</td></tr>
+  <tr><td><a href='jaypha.inet.mime.quotedprintable.html#quotedPrintableEncode'>quotedPrintableEncode</a></td><td>jaypha.inet.mime.quotedprintable</td><td>MIME Quoted Printable Encoding</td></tr>
+  <tr><td><a href='jaypha.inet.mime.contentdisposition.html#toMimeHeader'>toMimeHeader</a></td><td>jaypha.inet.mime.contentdisposition</td><td>Creates a Content-Disposition MIME header.</td></tr>
+  <tr><td><a href='jaypha.inet.mime.contenttype.html#toMimeHeader'>toMimeHeader</a></td><td>jaypha.inet.mime.contenttype</td><td>Creates a Content-Type MIME header.</td></tr>
+  <tr><td><a href='jaypha.inet.imf.writing.html#unstructuredHeader'>unstructuredHeader</a></td><td>jaypha.inet.writing</td><td>Creates an IMF header for generic header types</td></tr>
  </tbody>
 </table>
 
+<a name="Relevant_RFC"></a>
 <h2>Relevant RFCs</h2>
 <p><b>IMF is covered by</b></p>
 
 <table>
- <tr><td>RFC5322</td><td>IMF specification (defines header syntax)</td></tr>
- <tr><td>RFC6854</td><td>Update to allow multiple senders.</td></tr>
- <tr><td>RFC6152</td><td>8-bit extension.</td></tr>
- <tr><td>RFC2387</td><td>multipart/related</td></tr>
+ <tr><td><a href='http://tools.ietf.org/html/rfc5322'>RFC5322</a></td><td>IMF specification (defines header syntax)</td></tr>
+ <tr><td><a href='http://tools.ietf.org/html/rfc6854'>RFC6854</a></td><td>Update to allow multiple senders.</td></tr>
+ <tr><td><a href='http://tools.ietf.org/html/rfc6152'>RFC6152</a></td><td>8-bit extension.</td></tr>
+ <tr><td><a href='http://tools.ietf.org/html/rfc2387'>RFC2387</a></td><td>multipart/related</td></tr>
 </table>
 
 <p><b>MIME is covered by</b></p>
 
 <table>
- <tr><td>RFC2045</td><td>Original MIME Specs</td></tr>
- <tr><td>RFC2046</td><td>MIME Types</td></tr>
- <tr><td>RFC2047</td><td>Non ASCII in IMF headers.</td></tr>
- <tr><td>RFC2049</td><td>MIME Conformance</td></tr>
- <tr><td>RFC2183, 2184, 2231</td><td>Content Disposition Header</td></tr>
+ <tr><td><a href='http://tools.ietf.org/html/rfc2045'>RFC2045</a></td><td>Original MIME Specs</td></tr>
+ <tr><td><a href='http://tools.ietf.org/html/rfc2046'>RFC2046</a></td><td>MIME Types</td></tr>
+ <tr><td><a href='http://tools.ietf.org/html/rfc2047'>RFC2047</a></td><td>Non ASCII in IMF headers.</td></tr>
+ <tr><td><a href='http://tools.ietf.org/html/rfc2049'>RFC2049</a></td><td>MIME Conformance</td></tr>
+ <tr><td><a href='http://tools.ietf.org/html/rfc2183'>RFC2183</a>, <a href='http://tools.ietf.org/html/rfc2231'>2231</a></td><td>Content Disposition Header</td></tr>
 </table>
 
 <p><b>Other related RFCs</b></p>
 
 <table>
- <tr><td>RFC4289</td><td>Registration Procedures for MIME</td></tr>
- <tr><td>RFC4855</td><td>Media Type Registration of RTP Payload Formats</td></tr>
- <tr><td>RFC6838</td><td>Media Type Specifications and Registration Procedures</td></tr>
- <tr><td>RFC4021</td><td>Registration of Mail and MIME Header Fields</td></tr>
- <tr><td>RFC5321</td><td>Simple Mail Transfer Protocol</td></tr>
+ <tr><td><a href='http://tools.ietf.org/html/rfc4289'>RFC4289</a></td><td>Registration Procedures for MIME</td></tr>
+ <tr><td><a href='http://tools.ietf.org/html/rfc4855'>RFC4855</a></td><td>Media Type Registration of RTP Payload Formats</td></tr>
+ <tr><td><a href='http://tools.ietf.org/html/rfc6838'>RFC6838</a></td><td>Media Type Specifications and Registration Procedures</td></tr>
+ <tr><td><a href='http://tools.ietf.org/html/rfc4201'>RFC4021</a></td><td>Registration of Mail and MIME Header Fields</td></tr>
+ <tr><td><a href='http://tools.ietf.org/html/rfc5321'>RFC5321</a></td><td>Simple Mail Transfer Protocol</td></tr>
 </table>
 
-<p><b>Other Refernces</b></p>
+<p><b>Other References</b></p>
 <p>
 <a href='http://www.iana.org/assignments/media-types/media-types.xhtml'>Registered MIME Types</a></br>
 <a href='http://www.stdicon.com/mimetypes'>Mime Type file Extensions (JSON)</a><br/>

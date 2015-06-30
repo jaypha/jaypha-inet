@@ -37,7 +37,7 @@ import jaypha.rnd;
 // output range, performing any needed formatting and encoding.
 
 // The definition of MIME entities are convered by several RFC documents. See
-// rfc.txt for a list of these documents.
+// documentation for a list of these documents.
 
 struct MimeEntity
 {
@@ -59,9 +59,9 @@ struct MimeEntity
 
   //-------------------------------------------------------
 
-  this(MimeContentType contentType, bool wrap = false)
+  this(MimeContentType contentType, bool asImf = false)
   {
-    if (contentType.type.startsWith("multipart"))
+    if (contentType.mimeType.startsWith("multipart"))
     {
       entityType = Type.Multi;
       boundary = rndString(20);
@@ -70,7 +70,7 @@ struct MimeEntity
     else
       entityType = Type.Single;
 
-    headers = [ contentType.toMimeHeader(wrap) ];
+    headers = [ contentType.toMimeHeader(asImf) ];
   }
 
   //-------------------------------------------------------
@@ -88,7 +88,7 @@ struct MimeEntity
   {
     headers ~= MimeHeader("Content-Transfer-Encoding",encoding);
     foreach (h;headers)
-      range.put(cast(ByteArray)h.toString());
+      range.put(cast(ByteArray)h.asString);
     range.put(cast(ByteArray)MimeEoln);
 
     if (entityType == Type.Multi)

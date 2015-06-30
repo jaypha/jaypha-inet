@@ -35,22 +35,22 @@ struct MimeContentDisposition
 //-----------------------------------------------------------------------------
 // extracts the content of a Content-Disposition MIME header.
  
-MimeContentDisposition extractMimeContentDisposition(string s)
+MimeContentDisposition extractMimeContentDisposition(string fieldBody)
 {
   MimeContentDisposition cd;
 
-  skipSpaceComment(s);
-  cd.type = extractToken(s);
-  skipSpaceComment(s);
-  extractMimeParams(s,cd.parameters);
+  skipSpaceComment(fieldBody);
+  cd.type = extractToken(fieldBody);
+  skipSpaceComment(fieldBody);
+  extractMimeParams(fieldBody,cd.parameters);
   return cd;
 }
 
-MimeHeader toMimeHeader(ref MimeContentDisposition cd, bool asImf = false)
+MimeHeader toMimeHeader(ref MimeContentDisposition contentDisp, bool asImf = false)
 {
   auto a = appender!string;
-  a.put(cd.type);
-  foreach (i,v;cd.parameters)
+  a.put(contentDisp.type);
+  foreach (i,v;contentDisp.parameters)
     a.put("; "~i~"=\""~v~"\"");
 
   if (asImf)

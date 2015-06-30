@@ -28,36 +28,36 @@ struct MimeContentType
 {
   enum headerName = "Content-Type";
 
-  string type = "text/plain";
+  string mimeType = "text/plain";
   string[string] parameters;
 }
 
 //----------------------------------------------------------------------------
 // extracts the content of a Content-Type MIME header.
 
-MimeContentType extractMimeContentType(string s)
+MimeContentType extractMimeContentType(string fieldBody)
 {
   MimeContentType ct;
 
-  skipSpaceComment(s);
-  auto type = extractToken(s);
-  skipSpaceComment(s);
-  if (s.cfront != '/') throw new Exception("malformed MIME header");
-  s.popFront();
-  skipSpaceComment(s);
-  auto subType = extractToken(s); // TODO, the delimiter in this case is whitespace.
-  ct.type = type~"/"~subType;
-  extractMimeParams(s,ct.parameters);
+  skipSpaceComment(fieldBody);
+  auto type = extractToken(fieldBody);
+  skipSpaceComment(fieldBody);
+  if (fieldBody.cfront != '/') throw new Exception("malformed MIME header");
+  fieldBody.popFront();
+  skipSpaceComment(fieldBody);
+  auto subType = extractToken(fieldBody); // TODO, the delimiter in this case is whitespace.
+  ct.mimeType = type~"/"~subType;
+  extractMimeParams(fieldBody,ct.parameters);
   return ct;
 }
 
 //----------------------------------------------------------------------------
 
-MimeHeader toMimeHeader(ref MimeContentType ct, bool asImf = false)
+MimeHeader toMimeHeader(ref MimeContentType contentType, bool asImf = false)
 {
   auto a = appender!string;
-  a.put(ct.type);
-  foreach (i,v;ct.parameters)
+  a.put(contentType.mimeType);
+  foreach (i,v; contentType.parameters)
     a.put("; "~i~"=\""~v~"\"");
 
   if (asImf)

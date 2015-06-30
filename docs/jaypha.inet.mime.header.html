@@ -1,0 +1,54 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns='http://www.w3.org/1999/xhtml' xml:lang='en' lang='en'>
+<!--
+  Documentation for Jaypha Inet.
+  Copyright 2015 Jaypha.
+  Distributed under the Boost Licence.
+  Written by Jason den Dulk.
+-->
+<head>
+ <title>Jaypha Inet - jaypha.inet.mime.header</title>
+ <link rel='stylesheet' type='text/css' href='style.css'>
+</head>
+<body>
+<div class='body'>
+<div class='header'>
+ <img style='float:right' src='jaypha-94x24.gif'/>
+ <a href='_docs.html'>Back</a>
+ <div style='clear:both' ></div>
+</div>
+
+<h1>jaypha.inet.mime.header</h1>
+
+<dt class="d_decl">enum <a name="MimeEoln"></a><span class="funcName">MimeEoln</span></dt>
+<dd><p>End of line sequence. In MIME and IMF, end of lines are always
+represented by CRLF (carriage return, line feed), or &quot;\r\n&quot;.</p></dd>
+
+<dt class="d_decl">MimeHeader <a name="mimeVersion"></a><span class="funcName">mimeVersion</span></dt>
+<dd><p>A MIME header for representing the MIME version. It is always 1.0.</p></dd>
+
+<dt class="d_decl">struct <a name="MimeHeader"></a><span class="funcName">MimeHeader</span></dt>
+<dd><p>A struct for MIME/IMF headers.</p>
+<p>Rather than implementing a sophisticated polymorphic solution, I opted for
+a simpler struct based one. Field bodies are expected to be formatted as the header
+is created. There are many functions and structs that do this.</p>
+
+<p><b>Properties:</b></p>
+<table class='parms'>
+<tr><td class='code'>string <i>name</i></td><td>Header name</td></tr>
+<tr><td class='code'>string <i>fieldBody</i></td><td>Header field body</td></tr>
+<tr><td class='code'>string <i>asString</i></td><td>The whole header as a string</td></tr>
+</table>
+
+<p><b>Example:</b></p>
+<pre class='p'>
+  auto header = MimeHeader("X-Stuff", "The content");
+  assert(header.asString == "X-Stuff: The content");
+</pre>
+</dd>
+<p class='footer'>
+Copyright 2015 Jaypha
+</p>
+</div>
+</body>
+</html>

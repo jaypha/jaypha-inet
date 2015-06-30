@@ -18,7 +18,7 @@ import std.array;
 import std.string;
 
 enum ImfMaxLineLength = 998;
-enum ImfRecLineLength = 76;
+enum ImfRecLineLength = 78;
 
 //-----------------------------------------------------------------------------
 // Mailbox type used in address based headers (from, to, cc, etc)

@@ -22,6 +22,7 @@ import std.string;
 //----------------------------------------------------------------------------
 // input is an 8-bit code
 // output is an ASCII string.
+// See http://tools.ietf.org/html/rfc2045#section-6.7.
 
 string quotedPrintableEncode(ByteArray input, size_t maxLength = 76)
 {

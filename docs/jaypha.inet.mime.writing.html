@@ -1,0 +1,108 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns='http://www.w3.org/1999/xhtml' xml:lang='en' lang='en'>
+<!--
+  Documentation for Jaypha Inet.
+  Copyright 2015 Jaypha.
+  Distributed under the Boost Licence.
+  Written by Jason den Dulk.
+-->
+<head>
+ <title>Jaypha Inet - jaypha.inet.mime.writing</title>
+ <link rel='stylesheet' type='text/css' href='style.css'>
+</head>
+<body>
+<div class='body'>
+<div class='header'>
+ <img style='float:right' src='jaypha-94x24.gif'/>
+ <a href='_docs.html'>Back</a>
+ <div style='clear:both' ></div>
+</div>
+
+<h1>jaypha.inet.mime.writing</h1>
+
+<dt class="d_decl">struct <a name="MimeEntity"></a><span class="funcName">MimeEntity</span></dt>
+<dd><p>A structure used to write MIME entities.
+To read MIME entities, use jaypha.inet.mime.reading.mimeEntityReader</p>
+
+<p>A MIME entity has two parts, the headers and the body. The headers are
+provided by MimeHeader. The body can be either flat content (type "Single")
+or a list of MIME entities (type "Multi"). MIME entities that are multiple
+are identified by a mime-type of "mulitpart".</p>
+
+<p>Serialisation is performed by copy(), which writes the entity to the given
+output range, performing any needed formatting and encoding.</p>
+
+<p>The definition of MIME entities are convered by several RFC documents. See the 
+<a href='_docs.html#Relevant_RFC'>documentation main page</a> for a list of these documents.</p>
+</dd>
+
+<p><b>Properties:</b></p>
+<table class='parms'>
+<tr><td class='code'>MimeEntity.Type&nbsp;<i>entityType</i></td><td>Either Single or Multi.</td></tr>
+<tr><td class='code'>MimeHeader[] <i>headers</i></td><td>Generic headers</td></tr>
+<tr><td class='code'>string <i>encoding</i></td><td>Entity encoding. Can be either
+7bit, 8bit, base64, binary or quoted-printable. Defaults to 8bit.</td></tr>
+<tr><td class='code'>string <i>boundary</i></td><td>Boundary used in multipart entities.</td></tr>
+<tr><td class='code'>Content <i>content</i></td><td>The entity body.</td></tr>
+<tr><td class='code'>string <i>asString</i></td><td>The formatted entity as a string, including all headers.</td></tr>
+</table>
+
+<p><b>Methods:</b></p>
+<table class='parms'>
+<tr><td class='code'>this</td><td>Constrtuctor.</td></tr>
+<tr><td class='code'>copy</td><td>Outputs to an output range.</td></tr>
+</table>
+
+</dd>
+
+<div class='aggregate-content'>
+
+<dt class="d_decl"><a name="MimeEntity.this"></a><span class="funcName">this</span>(MimeContentType contentType, bool asImf = false)</dt>
+<dd><p>Constructor, taking a content type.</p>
+
+<p><b>Parameters:</b></p>
+<table class='parms'>
+<tr><td class='code'>MimeContentType <i>contentType</i></td><td>Content type of the entity</td></tr>
+<tr><td class='code'>bool <i>asImf</i></td><td>true if the entity is used in IMF. Defaults to false</td></tr>
+</table>
+
+<dt class="d_decl">void <a name="MimeEntity.copy"></a><span class="funcName">copy</span>(R)(R Rrange) if (isOutputRange!(R,ByteArray))</dt>
+<dd><p>Writes the entity to output.</p>
+
+<p><b>Template Parameters:</b></p>
+<table class='parms'>
+<tr><td class='code'>R</td><td>Output range for byte arrays.</td></tr>
+</table>
+<p><b>Parameters:</b></p>
+<table class='parms'>
+<tr><td class='code'>R <i>range</i></td><td>The output range</td></tr>
+</table>
+
+</div>
+
+<dt class="d_decl">enum <a name="MimeEntity.Type"></a><span class="funcName">MimeEntity.Type</span></dt>
+<dd><p>Used to determine wheither an entity is single or multiple.</p>
+
+<p><b>Values:</b></p>
+<table class='parms'>
+<tr><td class='code'>Single</td><td>Entitiy is standard.</td></tr>
+<tr><td class='code'>Multi</td><td>Entity is a 'multipart' type. Has sub-entities.</td></tr>
+</table>
+</dd>
+
+<dt class="d_decl">union <a name="MimeEntity.Content"></a><span class="funcName">MimeEntity.Content</span></dt>
+<dd><p>Holds the content of the entity.</p>
+
+<p><b>Members:</b></p>
+<table class='parms'>
+<tr><td class='code'>ByteArray <i>bod</i></td><td>Content for Single entites.</td></tr>
+<tr><td class='code'>MimeEntity[] <i>bodParts</i></td><td>Content for Multi entities.</td></tr>
+</table>
+</dd>
+
+<p class='footer'>
+Copyright 2015 Jaypha
+</p>
+</div>
+</body>
+</html>

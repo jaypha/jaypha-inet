@@ -1,0 +1,42 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns='http://www.w3.org/1999/xhtml' xml:lang='en' lang='en'>
+<!--
+  Documentation for Jaypha Inet.
+  Copyright 2015 Jaypha.
+  Distributed under the Boost Licence.
+  Written by Jason den Dulk.
+-->
+<head>
+ <title>Jaypha Inet - jaypha.inet.mime.quotedprintable</title>
+ <link rel='stylesheet' type='text/css' href='style.css'>
+</head>
+<body>
+<div class='body'>
+<div class='header'>
+ <img style='float:right' src='jaypha-94x24.gif'/>
+ <a href='_docs.html'>Back</a>
+ <div style='clear:both' ></div>
+</div>
+
+<h1>jaypha.inet.mime.quotedprintable</h1>
+
+<dt class="d_decl">string <a name="quotedPrintableEncode"></a><span class="funcName">quotedPrintableEncode</span>(ByteArray input, size_t maxLength = 76)</dt>
+<dd><p>Encodes input according to
+<a href='http://tools.ietf.org/html/rfc2045#section-6.7'>Quoted-Printable Content-Transfer-Encoding (RFC2045)</a>.</p></dd>
+
+<p><b>Parameters:</b></p>
+<table class='parms'>
+<tr><td class='code'>immutable(ubyte)[] <i>input</i></td><td>The source.</td></tr>
+<tr><td class='code'>size_t <i>maxLength</i></td><td>The maximum line length (defaults to 76).</td></tr>
+</table>
+
+<p><b>Returns:</b><br>The encoded content.</p>
+
+</dd>
+
+<p class='footer'>
+Copyright 2015 Jaypha
+</p>
+</div>
+</body>
+</html>

@@ -182,7 +182,7 @@ struct Email
   private MimeEntity getTextPart()
   {
     MimeContentType ct;
-    ct.type = "text/plain";
+    ct.mimeType = "text/plain";
     ct.parameters["charset"] = "UTF-8";
     
     auto entity = MimeEntity(ct, true);
@@ -199,7 +199,7 @@ struct Email
   private MimeEntity getMultiPart(string subType)
   {
     MimeContentType ct;
-    ct.type = "multipart/"~subType;
+    ct.mimeType = "multipart/"~subType;
     auto entity = MimeEntity(ct, true);
     return entity;
   }
@@ -210,7 +210,7 @@ struct Email
   private MimeEntity getHtmlPart()
   {
     MimeContentType ct;
-    ct.type = "text/html";
+    ct.mimeType = "text/html";
     ct.parameters["charset"] = "UTF-8";
     
     auto entity = MimeEntity(ct, true);
@@ -227,9 +227,9 @@ struct Email
   private MimeEntity getAttachmentPart(ref Attachment a)
   {
     MimeContentType ct;
-    ct.type = a.mimeType;
+    ct.mimeType = a.mimeType;
     MimeContentDisposition disp;
-    if (ct.type[0..5] != "image")
+    if (ct.mimeType[0..5] != "image")
       disp.type = "attachment";
     disp.parameters["filename"] = a.name;
     

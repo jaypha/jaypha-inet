@@ -27,9 +27,10 @@ import std.algorithm;
 import std.traits;
 
 //-----------------------------------------------------------------------------
-// extracts a single MIME parameter.
-// Parameters are of the format *(';' name '=' value)
+// extracts MIME parameters.
+// Parameters are of the format *(';' atrribute '=' value)
 // value = token / quoted-string.
+// TODO updated def in RFC2231
 
 void extractMimeParams(string source, ref string[string] parameters)
 {
@@ -231,13 +232,13 @@ void cpopFront(R)(ref R range) if (isInputRange!R)
   range.popFront();
 }
 
-
 //-----------------------------------------------------------------------------
 // Reads in headers from a MIME document. Unfolds multiline headers, but
 // does not perform any other lexing of header field bodies.
 // Does consume the empty line following headers.
+// TODO: Allow to read from strings as well as octect streams.
 
-MimeHeader[] parseMimeHeaders(BR)(ref BR r)
+MimeHeader[] parseMimeHeaders(BR)(ref BR reader)
   if ((isInputRange!BR && is(ElementType!BR : ubyte)))
 {
   MimeHeader[] headers;
@@ -245,12 +246,13 @@ MimeHeader[] parseMimeHeaders(BR)(ref BR r)
 
   while (true)
   {
-    auto buf = jaypha.algorithm.findSplit(r, cast(ubyte[])MimeEoln);
+    auto buf = jaypha.algorithm.findSplit(reader, cast(ubyte[])MimeEoln);
     if (buf[1] != cast(ubyte[]) MimeEoln) throw new Exception("malformed Mime Header");
 
     if (buf[0].length == 0) break;
 
     auto header = cast(string) buf[0];
+
     if (inPattern(header[0], mimeLwsp))
     {
       // leading whitespace means s part of the previous header.
@@ -347,25 +349,26 @@ unittest
 // Multipart Entity Reader. Takes an input range and converts it into an
 // input range of Mime Entity Readers. Each element represents a Mime Entity.
 // Presumes that headers of the primary entity have already been extracted.
+// TODO: See if a way can be found to preserve the preamble and epilogue.
 
 import jaypha.algorithm;
 import jaypha.range;
 
-auto mimeMultipartReader(Reader)(ref Reader r, string boundary)
-  if (isInputRange!Reader && is(ElementType!Reader : ubyte))
+auto mimeMultipartReader(BR)(ref BR reader, string boundary)
+  if (isInputRange!BR && is(ElementType!BR : ubyte))
 {
   string full_boundary = "\r\n--"~boundary;
 
-  jaypha.algorithm.findSplit(r, full_boundary[2..$]);
-  jaypha.algorithm.findSplit(r, "\r\n"); // skip over whitespace, but don't bother checking.
+  jaypha.algorithm.findSplit(reader, full_boundary[2..$]);
+  jaypha.algorithm.findSplit(reader, "\r\n"); // skip over whitespace, but don't bother checking.
 
-  auto entity = mimeEntityReader(readUntil(r, full_boundary));
+  auto entity = mimeEntityReader(readUntil(reader, full_boundary));
 
   alias typeof(entity) T;
 
   struct MR
   {
-    @property bool empty() { return r.empty; }
+    @property bool empty() { return reader.empty; }
 
     @property T front() { return entity; }
 
@@ -373,64 +376,21 @@ auto mimeMultipartReader(Reader)(ref Reader r, string boundary)
     {
       if (!entity.content.empty) entity.content.drain(); // In case the user pops before fully reading the entity
 
-      auto rem = jaypha.algorithm.findSplit(r, MimeEoln); // skip over whitespace, but don't bother checking.
+      auto rem = jaypha.algorithm.findSplit(reader, MimeEoln); // skip over whitespace, but don't bother checking.
       bool last_time = startsWith(rem[0], "--");
       if (!last_time)
       {
         if (rem[1] != MimeEoln) throw new Exception("malformed MIME Entity");
-        entity = mimeEntityReader(readUntil(r, full_boundary));
+        entity = mimeEntityReader(readUntil(reader, full_boundary));
       }
       else
       {
-        r.drain(); // Skip epilogue;
+        reader.drain(); // Skip epilogue;
       }
     }
   }
   return MR();
 }
-/+
-auto get_multipart_reader(Reader)(ref Reader r, string boundary)
-  if (isByteRange!Reader)
-{
-  string full_boundary = "\r\n--"~boundary;
-
-  if (!skipOverAnyway(r, full_boundary[2..$]))
-    skipOverUntil(r,full_boundary);
-  jaypha.range.munch(r, " \t");
-  skipOverAnyway(r,"\r\n");
-
-  auto entity = mime_entity_reader(readUntil(r, full_boundary));
-
-  alias typeof(entity) T;
-
-  struct MR
-  {
-    @property bool empty() { return r.empty; }
-
-    @property T front() { return entity; }
-
-    void popFront()
-    {
-      bool last_time = false;
-
-      if (!entity.content.empty) entity.content.drain();
-      if (skipOverAnyway(r, "--"))  // terminating boundary
-        last_time = true;
-      jaypha.range.munch(r, " \t");
-      if (!last_time)
-      {
-        skipOverAnyway(r,"\r\n");
-        entity = mime_entity_reader(readUntil(r, full_boundary));
-      }
-      else
-      {
-        r.drain(); // Skip epilogue;
-      }
-    }
-  }
-  return MR();
-}
-+/
 
 //----------------------------------------------------------------------------
 // Advances the input range until sentinal is found
@@ -678,3 +638,4 @@ unittest
   r1.copy(buff);
   assert(cast(char[])(buff.data) == "xyz");
 }
+

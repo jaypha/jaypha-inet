@@ -21,13 +21,14 @@ struct MimeHeader
 {
   string name;
   string fieldBody;
-  string toString() { return .toString(name,fieldBody); }
+  deprecated string toString() { return asString; }
+  @property string asString() { return (name~": "~fieldBody~MimeEoln); }
 }
 
 //-----------------------------------------------------------------------------
 // Basic format for headers <name>: <fieldBody>/r/n
 
-string toString(string name, string fieldBody)
+deprecated string toString(string name, string fieldBody)
 {
   return (name~": "~fieldBody~MimeEoln);
 }
